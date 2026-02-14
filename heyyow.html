@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Valentine Gift 💖</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Georgia', serif;
+}
+
+body{
+  height:100vh;
+  background:linear-gradient(135deg,#ffafcc,#ffc8dd,#ffe5ec,#fff0f5);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  position:relative;
+}
+
+/* floating hearts */
+.heart{
+  position:absolute;
+  font-size:22px;
+  animation:float 12s linear infinite;
+  opacity:0.7;
+}
+
+@keyframes float{
+  0%{transform:translateY(100vh);}
+  100%{transform:translateY(-10vh);}
+}
+
+.card{
+  background:rgba(255,255,255,0.75);
+  backdrop-filter:blur(20px);
+  padding:40px;
+  border-radius:30px;
+  box-shadow:0 30px 70px rgba(255,105,180,0.3);
+  text-align:center;
+  max-width:550px;
+  position:relative;
+}
+
+h1{
+  color:#c2185b;
+  margin-bottom:20px;
+}
+
+button{
+  padding:12px 25px;
+  border:none;
+  border-radius:30px;
+  margin:10px;
+  font-size:14px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.yes{
+  background:#ff4d8d;
+  color:white;
+}
+
+.no{
+  background:#eee;
+}
+
+button:hover{
+  transform:scale(1.1);
+}
+
+.warning{
+  color:#d63384;
+  margin-top:15px;
+  font-size:14px;
+  font-style:italic;
+}
+
+/* gift */
+.gift{
+  font-size:60px;
+  animation:bounce 1.5s infinite;
+}
+
+@keyframes bounce{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-10px);}
+}
+
+/* letter */
+.letter{
+  background:#fffaf0;
+  padding:30px;
+  margin-top:20px;
+  border-radius:15px;
+  box-shadow:
+    inset 0 0 30px rgba(0,0,0,0.05),
+    0 15px 40px rgba(0,0,0,0.2);
+  text-align:left;
+  font-size:15px;
+  line-height:1.8;
+  color:#8b004f;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+  <div class="gift">🎁</div>
+  <h1>Will you be my Valentine? 💘</h1>
+  <button class="yes" onclick="nextStep()">Yes 💖</button>
+  <button class="no" id="noBtn" onclick="noClick()">Engga 🙈</button>
+  <div id="warning" class="warning"></div>
+</div>
+
+<!-- Music -->
+<iframe id="music"
+width="0"
+height="0"
+style="display:none"
+src="https://www.youtube.com/embed/450p7goxZqg?autoplay=1&loop=1&playlist=450p7goxZqg"
+frameborder="0"
+allow="autoplay">
+</iframe>
+
+<script>
+
+function noClick(){
+  document.getElementById("warning").innerText = 
+  "eits no no ale pencet yes! 😠💘";
+
+  let btn = document.getElementById("noBtn");
+  btn.style.position="absolute";
+  btn.style.top=Math.random()*400+"px";
+  btn.style.left=Math.random()*400+"px";
+  btn.style.transform="scale(0.8)";
+}
+
+function nextStep(){
+  document.getElementById("card").innerHTML = `
+    <h1>ALOO CAYANGG TETEN,<br>HAPPY VALENTINE YAHH!🫰🏻💖</h1>
+    <button class="yes" onclick="showLetter()">buka hadiah 💝</button>
+  `;
+}
+
+function showLetter(){
+  document.getElementById("music").style.display="block";
+
+  const startDate = new Date("2025-08-01");
+  const today = new Date();
+  const diffTime = today - startDate;
+  const diffDays = Math.floor(diffTime / (1000*60*60*24));
+
+  document.getElementById("card").innerHTML = `
+    <div class="letter">
+    bebe,makasii yaa uda selalu ada buat aku sayang,aku bersyukur ada bebe di hidup aku,sejak kamu ada aku bahagia terus,fr bebee😛💓,aku bangga sama bebe,bebe cowo baik,bebe selalu nge usahain yg terbaik buat aku,bebe ga pernah kasar ke aku,bebe selalu mastiin kalo aku gabakal sedih sama bebe,bebe cowo kuat,semoga kamu di kasi kesehatan selalu ya sayang,semoga jalan kamu di permudah,aku bakal dampinginn kamu dari awal jauh,sampe nanti kita deket ya bebe,bismillah,papaii cayankk,love u bebe mwaa🫰🏻💖💖💖,sekali lagi happy valentine bebee💓💓
+
+    <br><br>💞 kita udah bareng selama <b>${diffDays}</b> hari sejak Agustus 💖
+    </div>
+  `;
+}
+
+function createHeart(){
+  const heart=document.createElement("div");
+  heart.className="heart";
+  heart.innerText="💖";
+  heart.style.left=Math.random()*window.innerWidth+"px";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),12000);
+}
+setInterval(createHeart,800);
+
+</script>
+
+</body>
+</html>
