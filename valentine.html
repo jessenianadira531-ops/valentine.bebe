@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Valentine Surprise for Bebe</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      overflow: hidden;
+    }
+
+    /* layar pembuka */
+    #intro {
+      background-color: #ffccdd;
+      color: #ff3399;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    #intro h1 {
+      font-size: 60px;
+      margin: 0;
+      animation: beat 1s infinite, blink 1s infinite;
+    }
+
+    @keyframes beat {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+    }
+
+    @keyframes blink {
+      0%,50%,100% { opacity: 1; }
+      25%,75% { opacity: 0.6; }
+    }
+
+    #intro button {
+      margin-top: 30px;
+      padding: 15px 30px;
+      font-size: 24px;
+      background-color: #ff99cc;
+      color: white;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(255,0,128,0.4);
+      animation: jump 1s infinite;
+    }
+
+    @keyframes jump {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* konten utama */
+    #main {
+      display: none;
+      text-align: center;
+      position: relative;
+    }
+
+    /* kartu valentine */
+    .card {
+      background-color: #fff0f5;
+      border: 3px dashed #ff3399;
+      border-radius: 20px;
+      padding: 30px;
+      display: inline-block;
+      margin: 50px auto;
+      box-shadow: 0 0 20px rgba(255,0,128,0.3);
+      text-align: center;
+      font-size: 22px;
+      color: #cc0066;
+      position: relative;
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    .card.show {
+      opacity: 1;
+    }
+
+    .heart {
+      color: red;
+      font-size: 50px;
+      animation: beat 1s infinite;
+    }
+
+    .falling-heart, .spin-heart, .confetti {
+      position: absolute;
+      font-size: 30px;
+      animation: fall 5s linear infinite;
+    }
+
+    @keyframes fall {
+      0% { top: -50px; transform: rotate(0deg); }
+      100% { top: 100vh; transform: rotate(360deg); }
+    }
+
+    .spin-heart {
+      font-size: 50px;
+      color: #ff6699;
+      animation: spin 4s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .confetti {
+      font-size: 20px;
+      color: #ff66aa;
+      animation: confettiFall 2s linear forwards;
+    }
+
+    @keyframes confettiFall {
+      0% { top: 0; transform: rotate(0deg); opacity:1; }
+      100% { top: 100vh; transform: rotate(360deg); opacity:0; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- layar pembuka -->
+  <div id="intro">
+    <h1>💖 love u bebe 💖</h1>
+    <p>happy valentine! klik tombol dibawah buat liat surprise aku 🥰</p>
+    <button onclick="showMain()">masuk</button>
+  </div>
+
+  <!-- konten utama -->
+  <div id="main">
+    <div class="card" id="valentineCard">
+      <p>makasih ya udah selalu ada buat aku 😘</p>
+      <p>aku sayang kamu, aku bangga sama kamu 💕</p>
+      <p>aku bersyukur punya kamu, jangan cape sama aku 😍</p>
+      <p>jangan pernah tinggalin aku, aku gabisa tanpa kamu 💖</p>
+      <p>sekarang hidup aku bergantung sama kamu, aku sayang kamu selalu ❤️</p>
+      <p>terimacii ya cayangg, love u bebeee! <span class="heart">💖💖💖</span></p>
+    </div>
+  </div>
+
+  <script>
+    const body = document.body;
+
+    // pindah dari intro ke main
+    function showMain() {
+      const intro = document.getElementById('intro');
+      const main = document.getElementById('main');
+      const card = document.getElementById('valentineCard');
+      intro.style.opacity = 0;
+      setTimeout(() => {
+        intro.style.display = 'none';
+        main.style.display = 'block';
+        card.classList.add('show');
+        triggerConfetti();
+      }, 1000);
+    }
+
+    // efek hati jatuh
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'falling-heart';
+      heart.style.left = Math.random() * window.innerWidth + 'px';
+      heart.style.fontSize = (20 + Math.random() * 30) + 'px';
+      heart.innerText = '❤️';
+      body.appendChild(heart);
+      setTimeout(() => {
+        body.removeChild(heart);
+      }, 5000);
+    }
+    setInterval(createHeart, 300);
+
+    // efek hati berputar di intro
+    function createSpinHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'spin-heart';
+      heart.style.top = Math.random() * window.innerHeight + 'px';
+      heart.style.left = Math.random() * window.innerWidth + 'px';
+      body.appendChild(heart);
+      setTimeout(() => {
+        body.removeChild(heart);
+      }, 4000);
+    }
+    setInterval(createSpinHeart, 500);
+
+    // confetti pas masuk
+    function triggerConfetti() {
+      for (let i=0; i<100; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * window.innerWidth + 'px';
+        confetti.style.fontSize = (10 + Math.random() * 20) + 'px';
+        confetti.innerText = '💖';
+        body.appendChild(confetti);
+        setTimeout(() => { body.removeChild(confetti); }, 2000);
+      }
+    }
+  </script>
+</body>
+</html>
